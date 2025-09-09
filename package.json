@@ -2,16 +2,18 @@
   "name": "mini-eventbrite-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec node src/server.js",
+    "start": "node src/server.js",
+    "build": "echo 'No build step needed for Node ESM'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/angeledv/mini-eventbrite-backend.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["express", "nodemon", "JWT", "Token", "Server"],
+  "author": "Angel Díaz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/angeledv/mini-eventbrite-backend/issues"
