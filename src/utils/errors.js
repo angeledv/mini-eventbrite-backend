@@ -16,5 +16,5 @@ export function unauthorized(message = 'Unauthorized') {
 }
 
 export function forbidden(message = 'Forbidden') {
-    return new AppError(message, 403, 'FORBIDDEN{');
+    return new AppError(message, 403, 'FORBIDDEN');
 }
