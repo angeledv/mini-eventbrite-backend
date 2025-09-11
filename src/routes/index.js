@@ -10,4 +10,4 @@ router.use('/events', events)
 router.use('/tickets', tickets)
 router.use('/checkin', tickets)
 
-export default router;
+export default router;   

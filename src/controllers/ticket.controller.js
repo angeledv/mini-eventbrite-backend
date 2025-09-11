@@ -18,16 +18,21 @@ export async function scan(req, res, next) {
     if (!token) throw new AppError('Missing token', 400, 'MISSING_TOKEN');
 
     let data;
-    try {
-      data = JSON.parse(token);
-    } catch (e) {
+    if (typeof token === 'string') {
+      try {
+        data = JSON.parse(token);
+      } catch (e) {
+        throw new AppError('Invalid token', 400, 'INVALID_TOKEN');
+      }
+    } else if (typeof token === 'object' && token !== null) {
+      data = token; // permite enviar { t, s } directo
+    } else {
       throw new AppError('Invalid token', 400, 'INVALID_TOKEN');
     }
 
     const { t, s } = data || {};
     if (!t || !s) throw new AppError('Invalid token', 400, 'INVALID_TOKEN');
 
-    // verify signature
     const h = crypto.createHmac('sha256', env.qrSigningSecret);
     h.update(t);
     const expected = h.digest('hex');
@@ -36,10 +41,9 @@ export async function scan(req, res, next) {
 
     const ticket = await Tickets.findTicketById(t);
     if (!ticket) throw new AppError('Ticket not found', 404, 'TICKET_NOT_FOUND');
-    
+
     const updated = await Tickets.checkIn(ticket);
     res.json({ ok: true, ticket: updated });
-    
   } catch (e) {
     next(e);
   }
